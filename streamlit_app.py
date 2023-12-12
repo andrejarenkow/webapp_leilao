@@ -40,12 +40,14 @@ with st.form('Atualizar dados!'):
  submitted = st.form_submit_button("Analisar")
  
 if submitted:
-  st.write('Aqui está:', link_leilao)
+  st.write('Aqui está')
  
 
   #criando as listas que serão os Datasets
   @st.cache_data()
   def load_data(link_leilao):
+   # Registra o tempo inicial
+  
    precos = []
    descricoes = []
    lances = []
@@ -207,9 +209,13 @@ if submitted:
   #for i in range(100): 
   #    time.sleep(0.1) 
   #    prg.progress(i+1) 
-
+  tempo_inicial = time.time()
   dados = load_data(link_leilao)
-  print(dados)
+ # Registra o tempo final
+  tempo_final = time.time()
+  # Calcula o tempo decorrido
+  tempo_decorrido = tempo_final - tempo_inicial
+  st.write(tempo_decorrido)
   dados['lances'] = dados['lances'].astype(int)
   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
   dados['valor_vendido'] = dados['lancado']*dados['preço']
@@ -261,12 +267,12 @@ if submitted:
    container = st.container(border=True)
    with container:
     st.metric('Valor vendido', f'R$ {dados["valor_vendido"].sum():,.2f}',)# delta = f'R$ {dados["valor_vendido"].sum()-valor_vendido_ontem:,.2f} em relação a ontem')
-    st.metric('Incremento Dia 1', f'R$ {leilao_dia_1:,.2f}')
-    st.metric('Incremento Dia 2', f'R$ {leilao_dia_2:,.2f}')
-    st.metric('Comissão estimada', f'R$ {dados["valor_vendido"].sum()*0.05:,.2f}')
-    #st.metric('Total de Visitas', dados['visitas'].sum())
-    #st.metric('Total de Lances', dados['lances'].sum())
-    #st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
+    #st.metric('Incremento Dia 1', f'R$ {leilao_dia_1:,.2f}')
+    #st.metric('Incremento Dia 2', f'R$ {leilao_dia_2:,.2f}')
+    #st.metric('Comissão estimada', f'R$ {dados["valor_vendido"].sum()*0.05:,.2f}')
+    st.metric('Total de Visitas', dados['visitas'].sum())
+    st.metric('Total de Lances', dados['lances'].sum())
+    st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
    
    
    
