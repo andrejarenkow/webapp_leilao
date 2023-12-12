@@ -59,7 +59,7 @@ if submitted:
  
    for i in range(1,20,1):
        print(i)
-       url = link_do_leilao +'&pag=' + str(i)
+       url = str(link_do_leilao) +'&pag=' + str(i)
        response = urlopen(url)
        html = response.read()
        soup = BeautifulSoup(html, 'html.parser')
