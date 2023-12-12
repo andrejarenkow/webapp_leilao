@@ -107,7 +107,7 @@ if submitted:
              bids.append(i.get_text().strip().split('\r')[0])        
    
      #print(tamanho)
-   leilao_catalogo.extend([catalogo]*tamanho)
+   
    
    
        #print(len(precos))
