@@ -43,7 +43,7 @@ if submitted:
 
   #criando as listas que serão os Datasets
   @st.cache_data()
-  def load_data(numero):
+  def load_data(link_do_leilao):
    precos = []
    descricoes = []
    lances = []
@@ -59,7 +59,7 @@ if submitted:
  
    for i in range(1,20,1):
        print(i)
-       url = link_leilao +'&pag=' + str(i)
+       url = link_do_leilao +'&pag=' + str(i)
        response = urlopen(url)
        html = response.read()
        soup = BeautifulSoup(html, 'html.parser')
@@ -204,7 +204,8 @@ if submitted:
   #for i in range(100): 
   #    time.sleep(0.1) 
   #    prg.progress(i+1) 
-  
+
+  dados = load_data(link_leilao)
   dados['lances'] = dados['lances'].astype(int)
   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
   dados['valor_vendido'] = dados['lancado']*dados['preço']
