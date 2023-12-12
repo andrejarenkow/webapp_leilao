@@ -32,7 +32,7 @@ col2.caption('Painel desenvolvido por André Jarenkow')
 
 
 with st.form('Atualizar dados!'):
-    st.write('Clique aqui para atualizar')
+    st.write('Qual é o link para o catálogo do leilão?')
 
 # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
