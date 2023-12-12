@@ -135,8 +135,8 @@ if submitted:
    df_geral.columns = ['preço', 'descrição','lote vendido', 'visitas', 'links', 'imagem', 'lances']
    #df_geral['Catalogo'] = leilao_catalogo
    dados = pd.concat([df_geral,dados])
-   for coluna in dados.columns:
-     dados[coluna] = dados[coluna].str.strip()
+   #for coluna in dados.columns:
+   #  dados[coluna] = dados[coluna].str.strip()
    
    preco_limpo = []
    for i in dados['preço']:
