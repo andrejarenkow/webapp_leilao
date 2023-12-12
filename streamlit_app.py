@@ -34,7 +34,7 @@ col2.caption('Painel desenvolvido por André Jarenkow')
 with st.form('Atualizar dados!'):
  st.write('Analisar leilão!')
  link_leilao = st.text_input('Cole aqui o link para o catálogo', placeholder = 'exemplo: https://www.letravivaleiloes.com.br/leilao.asp?Num=38762')
- num_leilao = link_leilao.split('Num=')[1]
+
 
 # Every form must have a submit button.
  submitted = st.form_submit_button("Analisar")
@@ -45,7 +45,7 @@ if submitted:
 
   #criando as listas que serão os Datasets
   @st.cache_data()
-  def load_data(num_leilao):
+  def load_data(link_leilao):
    precos = []
    descricoes = []
    lances = []
@@ -61,6 +61,7 @@ if submitted:
  
    for i in range(1,20,1):
        print(i)
+       num_leilao = link_leilao.split('Num=')[1]
        url = 'https://www.letravivaleiloes.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(i)
        response = urlopen(url)
        html = response.read()
