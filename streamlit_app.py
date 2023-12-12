@@ -106,8 +106,8 @@ if submitted:
            if j % 3 == 0:
              bids.append(i.get_text().strip().split('\r')[0])        
    
-     print(tamanho)
-     leilao_catalogo.extend([catalogo]*tamanho)
+     #print(tamanho)
+    leilao_catalogo.extend([catalogo]*tamanho)
    
    
        #print(len(precos))
