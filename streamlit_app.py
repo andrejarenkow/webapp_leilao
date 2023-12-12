@@ -182,9 +182,9 @@ if submitted:
   
     return lance_automatico, interessados, data_ultima
    
-   #automatico = '-'
-   #interessados = '-'
-   #data_ultima = '-'
+   automatico = []
+   interessados = []
+   data_ultima = []
   
    for i in dados['id']:
           print(i)
