@@ -208,6 +208,7 @@ if submitted:
   #    prg.progress(i+1) 
 
   dados = load_data(link_leilao)
+  print(dados)
   dados['lances'] = dados['lances'].astype(int)
   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
   dados['valor_vendido'] = dados['lancado']*dados['preço']
