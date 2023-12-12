@@ -221,19 +221,22 @@ if submitted:
   dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
   #dados['data_ultima'] = pd.to_datetime(dados['data_ultima'], errors='coerce', dayfirst=True)
   #st.success("Banco de dados atualizado!")
+  dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc='max').reset_index()
+  dados = dados.merge(dados_precos, left_on='id', right_on='peca')
+
   
   
   col1, col2, col3 = st.columns([1,2,3])
    
   with col3:
-       st.dataframe(dados[['imagem','descrição','preço','lances','visitas','links']],hide_index=True,
+       st.dataframe(dados[['imagem','descrição','valor','lances','visitas','links']],hide_index=True,
                     use_container_width=True,
                     height=600,
                    column_config={
                    'descrição':st.column_config.TextColumn(width='medium'),
                    'imagem':st.column_config.ImageColumn(),
                    'links':st.column_config.LinkColumn(),
-                   'preço':st.column_config.NumberColumn(
+                   'valor':st.column_config.NumberColumn(
                      'Preço',
                      format="R$%.2f",
                      width='small'
