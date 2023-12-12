@@ -37,7 +37,7 @@ with st.form('Atualizar dados!'):
  link_leilao = str(link_leilao)
 
 # Every form must have a submit button.
-    submitted = st.form_submit_button("Analisar")
+ submitted = st.form_submit_button("Analisar")
  
 if submitted:
   st.write('Aqui está:')
