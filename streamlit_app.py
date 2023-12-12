@@ -79,7 +79,7 @@ if submitted:
              precos.append(preco)
    
          lista_descricao = soup.findAll('div', {'class':'twelve columns product-description'})
-         tamanho  = tamanho + len(lista_descricao)
+         
    
          for i,j in zip(soup('div',{'class':'lotevendido lote-control'}), range(len(soup('div',{'class':'lotevendido lote-control'})))):
            if j % 3 == 0:
