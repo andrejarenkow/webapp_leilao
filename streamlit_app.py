@@ -40,7 +40,8 @@ with st.form('Atualizar dados!'):
  submitted = st.form_submit_button("Analisar")
  
 if submitted:
-  st.write('Aqui está:')
+  st.write('Aqui está:', link_leilao)
+ 
 
   #criando as listas que serão os Datasets
   @st.cache_data()
