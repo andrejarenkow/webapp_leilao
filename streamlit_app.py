@@ -1,4 +1,4 @@
-#Importação das bibliotecas 
+eil#Importação das bibliotecas 
 import numpy as np
 import pandas as pd
 import plotly
@@ -20,7 +20,7 @@ import datetime
  
 # Configurações da página
 st.set_page_config(
-    page_title="Leilão LetraViva",
+    page_title="Leilao",
     page_icon="	:book:",
     layout="wide",
     initial_sidebar_state='collapsed'
@@ -28,7 +28,7 @@ st.set_page_config(
 col1, col2, col3 = st.columns([2,12,1])
 
 col1.image('https://www.letravivaleiloes.com.br/custom/imagens/logo.png', width=200)
-col2.title('Monitoramento Leilão Letra Viva')
+col2.title('Monitoramento de Leilão')
 col2.caption('Painel desenvolvido por André Jarenkow')
 col2.caption('https://www.letravivaleiloes.com.br/leilao.asp?Num=38762')
 
