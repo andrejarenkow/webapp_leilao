@@ -162,47 +162,37 @@ if submitted:
    dados['id'] = dados['links'].apply(lambda x: x.split('ID=')[1].split('&')[0])
    dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
   
-   def busca_historico_lances(id_peca):
+   def busca_valores(id):
     url = 'https://www.letravivaleiloes.com.br/ajax/le_historico_peca.asp'
-    data = {"id":id_peca}
+    data = {"id":id}
     r = urlopen(Request(url, data=urlencode(data).encode()))
     html = r.read().decode('utf-8', 'ignore')
     soup = BeautifulSoup(html, 'html.parser')
-  
     try:
-      data_ultima = soup.find('span').get_text()
+      info = []
+      for i in soup.find_all('li'):
+        info.append((i.get_text(),id))
+  
+      dados_historico_preco = pd.DataFrame(info, columns=['info','peca'])
+      dados_historico_preco['data'] = pd.to_datetime(dados_historico_preco['info'].str.replace('R$ ','-', regex=False).str.replace('.00','-', regex=False).str.split('-', expand=True)[0],dayfirst=True, errors='coerce')
+      dados_historico_preco['valor'] = pd.to_numeric(dados_historico_preco['info'].str.replace(',','').str.replace('R$ ','-', regex=False).str.replace('.00','-', regex=False).str.split('-', expand=True)[1], errors='coerce')
   
     except:
-      data_ultima = '-'
-      
-    try:
-      interessados = soup.get_text().split()[0].split('|')[1]
-    
-    except:
-      interessados = 0
-      
-    lance_automatico = 'AUTOMATICO' in soup.get_text()
+      dados_historico_preco = pd.DataFrame(columns=['info','peca','data','valor'])
   
-  
-    return lance_automatico, interessados, data_ultima
+    return dados_historico_preco
+
+   total_historico_valores = pd.DataFrame()
+
+   for i in dados['id']:
+     print(i)
+     dados_individual_valores = busca_valores(i)
+     total_historico_valores = pd.concat([total_historico_valores,dados_individual_valores])
    
-   automatico = 0#[]
-   interessados = 0#[]
-   data_ultima = 0#[]
+   
+   
   
-   #for i in dados['id']:
-   #       print(i)
-   #       valores = busca_historico_lances(i)
-   #       automatico.append(valores[0])
-   #       interessados.append(int(valores[1]))
-   #       data_ultima.append(valores[2])
-  
-   dados['automatico'] = automatico
-   dados['interessados'] = interessados
-   dados['data_ultima'] = data_ultima
-    
-  
-   return dados
+   return dados, total_historico_valores
   
   #prg = st.progress(0) 
     
@@ -210,7 +200,7 @@ if submitted:
   #    time.sleep(0.1) 
   #    prg.progress(i+1) 
   tempo_inicial = time.time()
-  dados = load_data(link_leilao)
+  dados, total_historico_valores = load_data(link_leilao)
  # Registra o tempo final
   tempo_final = time.time()
   # Calcula o tempo decorrido
@@ -248,7 +238,7 @@ if submitted:
                    ),
                    })
    
-  total_historico_valores = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQWwT_7xvVyE_Yu1UeBfBKm8eq-biwQ0toD94DFAwPA0cvX-HBq6SajnyEIJRkujHiQTEiiHR_Q34kq/pub?gid=0&single=true&output=csv')
+  
   dados_historico = pd.pivot_table(total_historico_valores, index='peca', columns='data', values='valor', aggfunc='max')
   dados_historico = dados_historico.T.ffill().fillna(0)
   dados_historico['somatorio'] = dados_historico.sum(axis=1)
@@ -262,16 +252,11 @@ if submitted:
    ontem = (datetime.datetime.today() - datetime.timedelta(days=2)).strftime('%Y-%m-%d')
    valor_vendido_ontem = 0#historico_limpo[historico_limpo['data']==ontem]['somatorio'].values[0]
   
-  leilao_dia_1 = 166987-109694
-  leilao_dia_2 = 232594 - 166987
-   
+  
   with col1:
    container = st.container(border=True)
    with container:
-    st.metric('Valor vendido', f'R$ {dados["valor_vendido"].sum():,.2f}',)# delta = f'R$ {dados["valor_vendido"].sum()-valor_vendido_ontem:,.2f} em relação a ontem')
-    #st.metric('Incremento Dia 1', f'R$ {leilao_dia_1:,.2f}')
-    #st.metric('Incremento Dia 2', f'R$ {leilao_dia_2:,.2f}')
-    #st.metric('Comissão estimada', f'R$ {dados["valor_vendido"].sum()*0.05:,.2f}')
+    st.metric('Valor vendido', f'R$ {dados["valor_vendido"].sum():,.2f}',)
     st.metric('Total de Visitas', dados['visitas'].sum())
     st.metric('Total de Lances', dados['lances'].sum())
     st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
