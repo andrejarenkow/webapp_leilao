@@ -216,13 +216,15 @@ if submitted:
  
   dados['lances'] = dados['lances'].astype(int)
   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
-  dados['valor_vendido'] = dados['lancado']*dados['preço']
+  
   dados['id'] = dados['links'].apply(lambda x: x.split('ID=')[1].split('&')[0])
-  dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
+  
   #dados['data_ultima'] = pd.to_datetime(dados['data_ultima'], errors='coerce', dayfirst=True)
   #st.success("Banco de dados atualizado!")
   dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc='max').reset_index()
   dados = dados.merge(dados_precos, left_on='id', right_on='peca')
+  dados['valor_vendido'] = dados['lancado']*dados['valor']
+  dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
 
   
   
