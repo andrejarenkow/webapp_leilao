@@ -36,7 +36,8 @@ with st.form('Atualizar dados!'):
 
 # Every form must have a submit button.
  submitted = st.form_submit_button("Submit")
- #if submitted:
+ if submitted:
+  st.write('aa')
 
 #criando as listas que serão os Datasets
 @st.cache_data(ttl=60)
