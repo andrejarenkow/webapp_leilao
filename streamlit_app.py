@@ -263,7 +263,7 @@ if submitted:
     st.metric('Comissão estimada', f'R$ {dados["valor_vendido"].sum()*0.05:,.2f}')
     #st.metric('Total de Visitas', dados['visitas'].sum())
     #st.metric('Total de Lances', dados['lances'].sum())
-    st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
+    #st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
    
    
    
