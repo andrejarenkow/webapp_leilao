@@ -1,4 +1,4 @@
-eil#Importação das bibliotecas 
+#Importação das bibliotecas 
 import numpy as np
 import pandas as pd
 import plotly
@@ -27,17 +27,16 @@ st.set_page_config(
 ) 
 col1, col2, col3 = st.columns([2,12,1])
 
-col1.image('https://www.letravivaleiloes.com.br/custom/imagens/logo.png', width=200)
 col2.title('Monitoramento de Leilão')
 col2.caption('Painel desenvolvido por André Jarenkow')
-col2.caption('https://www.letravivaleiloes.com.br/leilao.asp?Num=38762')
 
-#with st.form('Atualizar dados!'):
-#    st.write('Clique aqui para atualizar')
 
-    # Every form must have a submit button.
-#    submitted = st.form_submit_button("Submit")
-#    if submitted:
+with st.form('Atualizar dados!'):
+    st.write('Clique aqui para atualizar')
+
+# Every form must have a submit button.
+ submitted = st.form_submit_button("Submit")
+ #if submitted:
 
 #criando as listas que serão os Datasets
 @st.cache_data(ttl=60)
