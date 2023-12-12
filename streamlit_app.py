@@ -36,7 +36,7 @@ with st.form('Atualizar dados!'):
     st.text_input('Cole aqui o link para o catálogo', placeholder = 'exemplo: https://www.letravivaleiloes.com.br/leilao.asp?Num=38762')
 
 # Every form must have a submit button.
-    submitted = st.form_submit_button("Submit")
+    submitted = st.form_submit_button("Analisar")
  
 if submitted:
   st.write('aa')
