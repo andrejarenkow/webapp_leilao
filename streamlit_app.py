@@ -216,7 +216,7 @@ if submitted:
   # Calcula o tempo decorrido
   tempo_decorrido = tempo_final - tempo_inicial
  #Escreve quanto tempo demorou
-  st.write(f'Demorou {tempo_decorrido.round(0)} segundos para rodar analisar.')
+  st.write(f'Demorou {round(tempo_decorrido, 0)} segundos para rodar analisar.')
  
   dados['lances'] = dados['lances'].astype(int)
   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
