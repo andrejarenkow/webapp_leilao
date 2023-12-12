@@ -215,7 +215,9 @@ if submitted:
   tempo_final = time.time()
   # Calcula o tempo decorrido
   tempo_decorrido = tempo_final - tempo_inicial
-  st.write(f'Demorou {tempo_decorrido.round(0)} segundos para rodar analisar.)
+ #Escreve quanto tempo demorou
+  st.write(f'Demorou {tempo_decorrido.round(0)} segundos para rodar analisar.')
+ 
   dados['lances'] = dados['lances'].astype(int)
   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
   dados['valor_vendido'] = dados['lancado']*dados['preço']
