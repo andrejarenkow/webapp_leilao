@@ -28,7 +28,7 @@ st.set_page_config(
 col1, col2, col3 = st.columns([2,12,1])
 
 col2.title('Monitoramento de Leilão')
-col2.caption('Painel desenvolvido por André Jarenkow')
+col2.caption('aplicação desenvolvida por André Jarenkow')
 
 
 with st.form('Atualizar dados!'):
@@ -40,13 +40,18 @@ with st.form('Atualizar dados!'):
  submitted = st.form_submit_button("Analisar")
  
 if submitted:
-  st.write('Aqui está')
+  st.write('Aguarde um pouco enquanto analisamos o leilão.')
  
 
   #criando as listas que serão os Datasets
-  @st.cache_data()
+  @st.cache_data(persist =True)
   def load_data(link_leilao):
-   # Registra o tempo inicial
+   # Título do leilão
+   url = link_leilao
+   response = urlopen(url)
+   html = response.read()
+   soup = BeautifulSoup(html, 'html.parser')
+   nome_leilao = soup.find_all('h2')[0].get_text()
   
    precos = []
    descricoes = []
@@ -192,7 +197,7 @@ if submitted:
    
    
   
-   return dados, total_historico_valores
+   return dados, total_historico_valores, nome_leilao
   
   #prg = st.progress(0) 
     
@@ -200,12 +205,13 @@ if submitted:
   #    time.sleep(0.1) 
   #    prg.progress(i+1) 
   tempo_inicial = time.time()
-  dados, total_historico_valores = load_data(link_leilao)
+  dados, total_historico_valores, nome_leilao = load_data(link_leilao)
  # Registra o tempo final
   tempo_final = time.time()
   # Calcula o tempo decorrido
   tempo_decorrido = tempo_final - tempo_inicial
  #Escreve quanto tempo demorou
+  st.subheader(nome_leilao)
   st.write(f'Demorou {round(tempo_decorrido, 0)} segundos para rodar analisar.')
  
   dados['lances'] = dados['lances'].astype(int)
