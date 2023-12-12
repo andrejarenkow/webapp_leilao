@@ -35,8 +35,9 @@ with st.form('Atualizar dados!'):
     st.write('Clique aqui para atualizar')
 
 # Every form must have a submit button.
- submitted = st.form_submit_button("Submit")
- if submitted:
+    submitted = st.form_submit_button("Submit")
+ 
+if submitted:
   st.write('aa')
 
 #criando as listas que serão os Datasets
