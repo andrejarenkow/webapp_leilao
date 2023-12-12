@@ -32,7 +32,8 @@ col2.caption('Painel desenvolvido por André Jarenkow')
 
 
 with st.form('Atualizar dados!'):
-    st.write('Qual é o link para o catálogo do leilão?')
+    st.write('Analisar leilão!')
+    st.text_input('Cole aqui o link para o catálogo', placeholder = 'exemplo: https://www.letravivaleiloes.com.br/leilao.asp?Num=38762')
 
 # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
