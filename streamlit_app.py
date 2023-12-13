@@ -215,6 +215,10 @@ if submitted:
   tempo_final = time.time()
   # Calcula o tempo decorrido
   tempo_decorrido = tempo_final - tempo_inicial
+ #Zerando o cache
+ reset_cache = st.button("Reset", type="primary")
+ if reset_cache:
+    load_data.clear()
  #Escreve quanto tempo demorou
   st.subheader(nome_leilao)
   st.write(f'Demorou {round(tempo_decorrido, 0)} segundos para rodar analisar.')
