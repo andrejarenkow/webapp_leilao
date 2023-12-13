@@ -91,18 +91,18 @@ if submitted:
          lista_descricao = soup.findAll('div', {'class':'twelve columns product-description'})
          
    
-         for i,j in zip(soup('div',{'class':'lotevendido lote-control'}), range(len(soup('div',{'class':'lotevendido lote-control'})))):
-           if j % 3 == 0:
-             lote_vendido.append(i.get_text().strip())
+         #for i,j in zip(soup('div',{'class':'lotevendido lote-control'}), range(len(soup('div',{'class':'lotevendido lote-control'})))):
+         #  if j % 3 == 0:
+         #    lote_vendido.append(i.get_text().strip())
    
          for item in lista_descricao:
            descricao = item.get_text()
            descricoes.append(descricao)
    
-         lista_lances = soup.findAll('strong')
-         for item in lista_lances:
-               lance = item.get_text()
-               lances.append(lance)
+         #lista_lances = soup.findAll('strong')
+         #for item in lista_lances:
+         #      lance = item.get_text()
+         #      lances.append(lance)
    
    
          lista_visitas = soup.findAll('div',{'class':'extra-info-lance'})
@@ -115,9 +115,9 @@ if submitted:
            imagens.append(link.img['src'])
            links.append(f'https://www.{leiloeiro}.com.br/'+link.img['value'])
    
-         for i,j in zip(soup('div',{'class':'product-price-bid'}), range(len(soup('div',{'class':'product-price-bid'})))):
-           if j % 3 == 0:
-             bids.append(i.get_text().strip().split('\r')[0])     
+         #for i,j in zip(soup('div',{'class':'product-price-bid'}), range(len(soup('div',{'class':'product-price-bid'})))):
+         #  if j % 3 == 0:
+         #    bids.append(i.get_text().strip().split('\r')[0])     
 
          
    
@@ -136,41 +136,41 @@ if submitted:
    print(len(links))
    
    df = []
-   df.append(precos)
+   #df.append(precos)
    df.append(descricoes)
-   df.append(lote_vendido)
+   #df.append(lote_vendido)
    df.append(visitas)
    df.append(links)
    df.append(imagens)
-   df.append(bids)
+   #df.append(bids)
    
    
    df_geral = pd.DataFrame(df).T
-   df_geral.columns = ['preço', 'descrição','lote vendido', 'visitas', 'links', 'imagem', 'lances']
+   df_geral.columns = ['descrição', 'visitas', 'links', 'imagem']
    #df_geral['Catalogo'] = leilao_catalogo
    dados = pd.concat([df_geral,dados])
    #for coluna in dados.columns:
    #  dados[coluna] = dados[coluna].str.strip()
    
-   preco_limpo = []
-   for i in dados['preço']:
-     try:
-       limpo = float(i.split('R$ ')[1].replace(',',''))
-       preco_limpo.append(limpo)
-     except:
-       preco_limpo.append(-1)
+   #preco_limpo = []
+   #for i in dados['preço']:
+   #  try:
+   #    limpo = float(i.split('R$ ')[1].replace(',',''))
+   #    preco_limpo.append(limpo)
+   #  except:
+   #    preco_limpo.append(-1)
    
    dados['visitas'] = dados['visitas'].astype(int)
-   dados['preço'] = preco_limpo
-   dados['preço'] = dados['preço'].replace(r'^\s*$', np.nan, regex=True)
-   dados['lote vendido'] = dados['lote vendido'].replace('None', np.nan, regex=True)
+   #dados['preço'] = preco_limpo
+   #dados['preço'] = dados['preço'].replace(r'^\s*$', np.nan, regex=True)
+   #dados['lote vendido'] = dados['lote vendido'].replace('None', np.nan, regex=True)
    #dados = dados[dados['preço']>0].reset_index(drop=True)
   
    #dados['lances'] = dados['lances'].astype(int)
-   dados['lancado'] = 1#dados['lances'].apply(lambda x: 1 if x > 0 else 0)
-   dados['valor_vendido'] = dados['lancado']*dados['preço']
+   #dados['lancado'] = 1#dados['lances'].apply(lambda x: 1 if x > 0 else 0)
+   #dados['valor_vendido'] = dados['lancado']*dados['preço']
    dados['id'] = dados['links'].apply(lambda x: x.split('ID=')[1].split('&')[0])
-   dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
+   #dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
   
    def busca_valores(id, leilo):
     url = f'https://www.{leilo}.com.br/ajax/le_historico_peca.asp'
