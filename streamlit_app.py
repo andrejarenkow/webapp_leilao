@@ -69,7 +69,8 @@ if submitted:
    for i in range(1,20,1):
        print(i)
        num_leilao = link_leilao.split('Num=')[1]
-       url = 'https://www.letravivaleiloes.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(i)
+       leiloeiro = link_leilao.split('www.')[1].split('.com.br')[0]
+       url = f'https://www.{leiloeiro}.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(i)
        response = urlopen(url)
        html = response.read()
        soup = BeautifulSoup(html, 'html.parser')
@@ -110,7 +111,7 @@ if submitted:
    
          for link in soup.findAll('div', {'class':'product-image zoom_01'}):
            imagens.append(link.img['src'])
-           links.append('https://www.letravivaleiloes.com.br/'+link.img['value'])
+           links.append(f'https://www.{leiloeiro}.com.br/'+link.img['value'])
    
          for i,j in zip(soup('div',{'class':'product-price-bid'}), range(len(soup('div',{'class':'product-price-bid'})))):
            if j % 3 == 0:
@@ -167,8 +168,8 @@ if submitted:
    dados['id'] = dados['links'].apply(lambda x: x.split('ID=')[1].split('&')[0])
    dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
   
-   def busca_valores(id):
-    url = 'https://www.letravivaleiloes.com.br/ajax/le_historico_peca.asp'
+   def busca_valores(id, leilo):
+    url = f'https://www.{leilo}.com.br/ajax/le_historico_peca.asp'
     data = {"id":id}
     r = urlopen(Request(url, data=urlencode(data).encode()))
     html = r.read().decode('utf-8', 'ignore')
@@ -191,7 +192,7 @@ if submitted:
 
    for i in dados['id']:
      print(i)
-     dados_individual_valores = busca_valores(i)
+     dados_individual_valores = busca_valores(i, leiloeiro)
      total_historico_valores = pd.concat([total_historico_valores,dados_individual_valores])
    
    
