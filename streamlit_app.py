@@ -59,6 +59,12 @@ if submitted:
    dados = pd.DataFrame()
    
    page = 1
+   num_leilao = link_leilao.split('Num=')[1]
+   leiloeiro = link_leilao.split('www.')[1].split('.com.br')[0]
+   url = f'https://www.{leiloeiro}.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(page)
+   response = urlopen(url)
+   html = response.read()
+   soup = BeautifulSoup(html, 'html.parser')
    #for i in range(1,100,1):
    while len(soup('div',{'class':'visits'}))>0:
        
