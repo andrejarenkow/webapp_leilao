@@ -44,7 +44,7 @@ if submitted:
  
 
   #criando as listas que serão os Datasets
-  @st.cache_data(persist =True)
+  @st.cache_data()
   def load_data(link_leilao):
    # Título do leilão
    url = link_leilao
