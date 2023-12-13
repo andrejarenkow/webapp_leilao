@@ -215,8 +215,8 @@ if submitted:
   st.subheader(nome_leilao)
   st.write(f'Demorou {round(tempo_decorrido, 0)} segundos para rodar analisar.')
  
-  dados['lances'] = #dados['lances'].astype(int)
-  dados['lancado'] = 1#dados['lances'].apply(lambda x: 1 if x > 0 else 0)
+  #dados['lances'] = dados['lances'].astype(int)
+  #dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
   
   dados['id'] = dados['links'].apply(lambda x: x.split('ID=')[1].split('&')[0])
   
