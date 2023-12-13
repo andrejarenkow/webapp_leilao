@@ -69,7 +69,7 @@ if submitted:
    #for i in range(1,100,1):
    while len(soup('p',{'class':'price-bid'}))>0:
        page += 1
-       print(i)
+       print(page)
        num_leilao = link_leilao.split('Num=')[1]
        leiloeiro = link_leilao.split('www.')[1].split('.com.br')[0]
        url = f'https://www.{leiloeiro}.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(page)
