@@ -223,7 +223,7 @@ if submitted:
   #dados['data_ultima'] = pd.to_datetime(dados['data_ultima'], errors='coerce', dayfirst=True)
   #st.success("Banco de dados atualizado!")
   dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc=['max', 'count']).reset_index()
-  dados_precos
+  st.write(dados_precos.columns)
   dados = dados.merge(dados_precos, left_on='id', right_on='peca', how='left')
   dados['lancado'] = dados['count'].apply(lambda x: 1 if x > 0 else 0)
   dados['valor_vendido'] = dados['lancado']*dados['max']
