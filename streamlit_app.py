@@ -222,11 +222,12 @@ if submitted:
   
   #dados['data_ultima'] = pd.to_datetime(dados['data_ultima'], errors='coerce', dayfirst=True)
   #st.success("Banco de dados atualizado!")
-  dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc=['max', 'count']).reset_index()
+  dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc=['max', 'count']).T.reset_index().T.reset_index().drop([0,1])
+  dados_precos.columns = ['peca', 'valor', 'lancess']
   st.write(dados_precos.columns)
   dados = dados.merge(dados_precos, left_on='id', right_on='peca', how='left')
-  dados['lancado'] = dados[('count', 'valor')].apply(lambda x: 1 if x > 0 else 0)
-  dados['valor_vendido'] = dados['lancado']*dados[( 'max', 'valor')]
+  dados['lancado'] = dados['lancess'].apply(lambda x: 1 if x > 0 else 0)
+  dados['valor_vendido'] = dados['lancado']*dados['valor']
   dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
 
   
@@ -234,19 +235,19 @@ if submitted:
   col1, col2, col3 = st.columns([1,2,3])
    
   with col3:
-       st.dataframe(dados[['imagem','descrição',( 'max', 'valor'),('count', 'valor'),'visitas','links']].fillna('Lote nào vendido'),hide_index=True,
+       st.dataframe(dados[['imagem','descrição','valor','lancess','visitas','links']].fillna('Lote nào vendido'),hide_index=True,
                     use_container_width=True,
                     height=600,
                    column_config={
                    'descrição':st.column_config.TextColumn(width='medium'),
                    'imagem':st.column_config.ImageColumn(),
                    'links':st.column_config.LinkColumn(),
-                   ( 'max', 'valor'):st.column_config.NumberColumn(
+                   'valor':st.column_config.NumberColumn(
                      'Preço vendido',
                      format="R$%.2f",
                      width='small'
                    ),
-                     ('count', 'valor'):st.column_config.NumberColumn(
+                     'lancess':st.column_config.NumberColumn(
                      'Lances',
                      width='small'
                    ),
