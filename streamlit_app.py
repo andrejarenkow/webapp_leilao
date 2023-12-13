@@ -118,7 +118,7 @@ if submitted:
            if j % 3 == 0:
              bids.append(i.get_text().strip().split('\r')[0])     
 
-         i = i+1
+         i += 1
    
      #print(tamanho)
    
