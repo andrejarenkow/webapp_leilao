@@ -42,7 +42,6 @@ with st.form('Atualizar dados!'):
 if submitted:
   st.write('Aguarde um pouco enquanto analisamos o leilão.')
  
-
   #criando as listas que serão os Datasets
   @st.cache_data()
   def load_data(link_leilao):
@@ -53,22 +52,16 @@ if submitted:
    soup = BeautifulSoup(html, 'html.parser')
    nome_leilao = soup.find_all('h2')[0].get_text()
   
-   precos = []
    descricoes = []
-   lances = []
    visitas = []
    links = []
-   leilao_catalogo = []
-   lote_vendido = []
-   imagens = []
-   bids = []
-   
+   imagens = []  
    dados = pd.DataFrame()
    
-   page = 0
+   page = 1
    #for i in range(1,100,1):
    while len(soup('div',{'class':'visits'}))>0:
-       page += 1
+       
        print(page)
        num_leilao = link_leilao.split('Num=')[1]
        leiloeiro = link_leilao.split('www.')[1].split('.com.br')[0]
@@ -95,6 +88,8 @@ if submitted:
        for link in soup.findAll('div', {'class':'product-image zoom_01'}):
            imagens.append(link.img['src'])
            links.append(f'https://www.{leiloeiro}.com.br/'+link.img['value'])
+
+       page += 1
    
   
    df = []
