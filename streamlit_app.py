@@ -222,9 +222,10 @@ if submitted:
   
   #dados['data_ultima'] = pd.to_datetime(dados['data_ultima'], errors='coerce', dayfirst=True)
   #st.success("Banco de dados atualizado!")
-  dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc='max').reset_index()
+  dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc=['max', 'count']).reset_index()
   dados = dados.merge(dados_precos, left_on='id', right_on='peca', how='left')
-  dados['valor_vendido'] = dados['lancado']*dados['valor']
+  dados['lancado'] = dados['(count, valor)'].apply(lambda x: 1 if x > 0 else 0)
+  dados['valor_vendido'] = dados['lancado']*dados['(max, valor)']
   dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
 
   
@@ -232,14 +233,14 @@ if submitted:
   col1, col2, col3 = st.columns([1,2,3])
    
   with col3:
-       st.dataframe(dados[['imagem','descrição','valor','lances','visitas','links']],hide_index=True,
+       st.dataframe(dados[['imagem','descrição','(max, valor)','lances','visitas','links']],hide_index=True,
                     use_container_width=True,
                     height=600,
                    column_config={
                    'descrição':st.column_config.TextColumn(width='medium'),
                    'imagem':st.column_config.ImageColumn(),
                    'links':st.column_config.LinkColumn(),
-                   'valor':st.column_config.NumberColumn(
+                   '(max, valor)':st.column_config.NumberColumn(
                      'Preço',
                      format="R$%.2f",
                      width='small'
