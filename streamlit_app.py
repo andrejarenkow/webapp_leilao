@@ -79,7 +79,7 @@ if submitted:
    
        #print(i)
    
-       if len(soup('p',{'class':'price-bid'}))>0:
+       if len(soup('p',{'class':'produtc-price-bid'}))>0:
          #print('contém esta página')
          lista_precos = soup('p',{'class':'price-bid'})
          for numero in range(len(lista_precos)):
