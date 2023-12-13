@@ -79,23 +79,22 @@ if submitted:
    
        #print(i)
    
-       if len(soup('p',{'class':'produtc-price-bid'}))>0:
-         #print('contém esta página')
-         lista_precos = soup('p',{'class':'price-bid'})
-         for numero in range(len(lista_precos)):
+       #print('contém esta página')
+       lista_precos = soup('p',{'class':'price-bid'})
+       for numero in range(len(lista_precos)):
            if (numero % 2) == 0:
              preco = lista_precos[numero].get_text()
    
              precos.append(preco)
    
-         lista_descricao = soup.findAll('div', {'class':'twelve columns product-description'})
+       lista_descricao = soup.findAll('div', {'class':'twelve columns product-description'})
          
    
          #for i,j in zip(soup('div',{'class':'lotevendido lote-control'}), range(len(soup('div',{'class':'lotevendido lote-control'})))):
          #  if j % 3 == 0:
          #    lote_vendido.append(i.get_text().strip())
    
-         for item in lista_descricao:
+       for item in lista_descricao:
            descricao = item.get_text()
            descricoes.append(descricao)
    
@@ -105,13 +104,13 @@ if submitted:
          #      lances.append(lance)
    
    
-         lista_visitas = soup.findAll('div',{'class':'extra-info-lance'})
-         for item in lista_visitas:
+       lista_visitas = soup.findAll('div',{'class':'extra-info-lance'})
+       for item in lista_visitas:
            visita = item.find('span').get_text()
            visitas.append(visita)
    
    
-         for link in soup.findAll('div', {'class':'product-image zoom_01'}):
+       for link in soup.findAll('div', {'class':'product-image zoom_01'}):
            imagens.append(link.img['src'])
            links.append(f'https://www.{leiloeiro}.com.br/'+link.img['value'])
    
