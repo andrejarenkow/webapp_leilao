@@ -163,7 +163,7 @@ if submitted:
    #dados = dados[dados['preço']>0].reset_index(drop=True)
   
    #dados['lances'] = dados['lances'].astype(int)
-   dados['lancado'] = dados['lances'].apply(lambda x: 1 if x > 0 else 0)
+   dados['lancado'] = 1#dados['lances'].apply(lambda x: 1 if x > 0 else 0)
    dados['valor_vendido'] = dados['lancado']*dados['preço']
    dados['id'] = dados['links'].apply(lambda x: x.split('ID=')[1].split('&')[0])
    dados.sort_values([ 'valor_vendido' ], ascending=False, inplace=True)
