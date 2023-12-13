@@ -224,7 +224,6 @@ if submitted:
   #st.success("Banco de dados atualizado!")
   dados_precos = pd.pivot_table(total_historico_valores, index='peca', values='valor', aggfunc=['max', 'count']).T.reset_index().T.reset_index().drop([0,1])
   dados_precos.columns = ['peca', 'valor', 'lancess']
-  st.write(dados_precos.columns)
   dados = dados.merge(dados_precos, left_on='id', right_on='peca', how='left')
   dados['lancado'] = dados['lancess'].apply(lambda x: 1 if x > 0 else 0)
   dados['valor_vendido'] = dados['lancado']*dados['valor']
