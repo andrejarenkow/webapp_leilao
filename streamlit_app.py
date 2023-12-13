@@ -67,7 +67,7 @@ if submitted:
    
    page = 0
    #for i in range(1,100,1):
-   while len(soup('p',{'class':'price-bid'}))>0:
+   while len(soup('p',{'class':'product-price-bid'}))>0:
        page += 1
        print(page)
        num_leilao = link_leilao.split('Num=')[1]
