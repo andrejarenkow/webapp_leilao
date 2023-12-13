@@ -233,7 +233,7 @@ if submitted:
   col1, col2, col3 = st.columns([1,2,3])
    
   with col3:
-       st.dataframe(dados[['imagem','descrição','(max, valor)','lances','visitas','links']],hide_index=True,
+       st.dataframe(dados[['imagem','descrição','(max, valor)','(count, valor)','visitas','links']].fillna('Lote nào vendido'),hide_index=True,
                     use_container_width=True,
                     height=600,
                    column_config={
@@ -241,11 +241,11 @@ if submitted:
                    'imagem':st.column_config.ImageColumn(),
                    'links':st.column_config.LinkColumn(),
                    '(max, valor)':st.column_config.NumberColumn(
-                     'Preço',
+                     'Preço vendido',
                      format="R$%.2f",
                      width='small'
                    ),
-                     'lances':st.column_config.NumberColumn(
+                     '(count, valor)':st.column_config.NumberColumn(
                      'Lances',
                      width='small'
                    ),
