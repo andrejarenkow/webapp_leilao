@@ -65,9 +65,10 @@ if submitted:
    
    dados = pd.DataFrame()
    
-   i = 1
+   i = 0
    #for i in range(1,100,1):
    while len(soup('p',{'class':'price-bid'}))>0:
+       i += 1
        print(i)
        num_leilao = link_leilao.split('Num=')[1]
        leiloeiro = link_leilao.split('www.')[1].split('.com.br')[0]
@@ -118,7 +119,7 @@ if submitted:
            if j % 3 == 0:
              bids.append(i.get_text().strip().split('\r')[0])     
 
-         i += 1
+         
    
      #print(tamanho)
    
