@@ -270,8 +270,8 @@ if submitted:
    with container:
     st.metric('Valor vendido', f'R$ {dados["valor_vendido"].sum():,.2f}',)
     st.metric('Total de Visitas', dados['visitas'].sum())
-    st.metric('Total de Lances', dados['lances'].sum())
-    st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
+    #st.metric('Total de Lances', dados['lances'].sum())
+    #st.metric('Itens com lances', f"{((dados['lances']>0).sum()/len(dados['lancado'])*100).round(1)} %")
    
    
    
