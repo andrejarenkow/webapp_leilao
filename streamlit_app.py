@@ -65,14 +65,14 @@ if submitted:
    
    dados = pd.DataFrame()
    
-   i = 0
+   page = 0
    #for i in range(1,100,1):
    while len(soup('p',{'class':'price-bid'}))>0:
-       i += 1
+       page += 1
        print(i)
        num_leilao = link_leilao.split('Num=')[1]
        leiloeiro = link_leilao.split('www.')[1].split('.com.br')[0]
-       url = f'https://www.{leiloeiro}.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(i)
+       url = f'https://www.{leiloeiro}.com.br/catalogo.asp?Num='+ str(num_leilao) +'&pag=' + str(page)
        response = urlopen(url)
        html = response.read()
        soup = BeautifulSoup(html, 'html.parser')
